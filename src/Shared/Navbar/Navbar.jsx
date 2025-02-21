@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <div>
-      <div className="navbar bg-base-100">
+    <div className='w-11/12 mx-auto'>
+      <div className="navbar ">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,7 +53,7 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <Link to={'/signIn'}>Sign In</Link>
+    <Link to={'/signIn'}><h2 className='btn'>Sign In</h2></Link>
   </div>
 </div>
     </div>
