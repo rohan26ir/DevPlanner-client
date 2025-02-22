@@ -63,3 +63,13 @@ DevPlanner-client/
 }
 ```
 
+## Installation steps
+
+- Clone the repository:
+    git clone https://github.com/rohan26ir/DevPlanner-client.git
+    cd DevPlanner-client
+- Install dependencies:
+    npm install
+- Start the development server:
+    npm run dev
+The application will run at http://localhost:5173
