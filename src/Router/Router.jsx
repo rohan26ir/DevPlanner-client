@@ -7,6 +7,8 @@ import Error from "../Shared/Error/Error";
 import Home from "../Pages/Home/Home";
 import SignIn from "../Account/SignIn/SignIn";
 import SignUp from "../Account/SignUp/SignUp";
+import PostTask from "../Pages/Home/PostTask";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = createBrowserRouter([
   {
@@ -16,7 +18,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>
+        element: <PrivateRoute><Home></Home></PrivateRoute>
       },
       {
         path: "/signIn",
@@ -25,6 +27,10 @@ const Router = createBrowserRouter([
       {
         path: "/signUp",
         element: <SignUp></SignUp>
+      },
+      {
+        path: '/addtask',
+        element: <PostTask></PostTask>
       }
     ]
   },

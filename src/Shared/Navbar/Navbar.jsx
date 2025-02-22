@@ -9,7 +9,6 @@ const Navbar = () => {
   const handleOut = async () => {
     try {
       await logOut();
-      console.log("User signed out successfully!");
     } catch (error) {
       console.error("Sign Out Error:", error.message);
     }
@@ -37,7 +36,7 @@ const Navbar = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-              <li><a>Item 1</a></li>
+              {/* <li><a>Item 1</a></li>
               <li>
                 <a>Parent</a>
                 <ul className="p-2">
@@ -45,14 +44,14 @@ const Navbar = () => {
                   <li><a>Submenu 2</a></li>
                 </ul>
               </li>
-              <li><a>Item 3</a></li>
+              <li><a>Item 3</a></li> */}
             </ul>
           </div>
            <Link to={"/"}><h1 className="btn btn-ghost text-xl">DevPlanner</h1></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li><a>Item 1</a></li>
+            {/* <li><a>Item 1</a></li>
             <li>
               <details>
                 <summary>Parent</summary>
@@ -62,7 +61,7 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
-            <li><a>Item 3</a></li>
+            <li><a>Item 3</a></li> */}
           </ul>
         </div>
         <div className="navbar-end">

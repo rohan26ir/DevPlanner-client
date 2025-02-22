@@ -4,39 +4,61 @@ import { AuthContext } from "../../Provider/Provider";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import signUpImage from "../../assets/signup.svg";
 import { FcGoogle } from "react-icons/fc";
+import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const { createNewUser, signInWithGoogle } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // ✅ Handle User Sign-Up
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
+      // Create user with Firebase Authentication
       const userCredential = await createNewUser(email, password);
       const user = userCredential.user;
-      await axiosPublic.post("/users", {
-        name,
-        email,
-        photoUrl
+
+      // Update user profile in Firebase
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: photoUrl
       });
+
+      // Store user in MongoDB (Preventing duplicates)
+      await axiosPublic.post("/users", { name, email, photoUrl });
+
       console.log("User signed up and data stored successfully!");
-      navigate("/"); // Redirect to home after successful sign-up
+      navigate("/");
     } catch (error) {
       console.error("Sign Up Error:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ✅ Handle Google Login
   const handleGoogleLogin = async () => {
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+      const user = result.user;
+
+      // Store Google user in MongoDB (Preventing duplicates)
+      await axiosPublic.post("/users", {
+        name: user.displayName,
+        email: user.email,
+        photoUrl: user.photoURL
+      });
+
       console.log("Google Sign-in successful!");
-      navigate("/"); // Redirect to home after Google login
+      navigate("/");
     } catch (error) {
       console.error("Google Login Error:", error.message);
     }
@@ -85,13 +107,16 @@ const SignUp = () => {
               className="border border-gray-300 p-3 w-full rounded focus:ring-2 focus:ring-blue-500 outline-none"
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
-              required
+              
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-all"
+              disabled={loading}
+              className={`bg-blue-600 text-white px-4 py-2 rounded w-full ${
+                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+              }`}
             >
-              Sign Up
+              {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
 
@@ -115,7 +140,6 @@ const SignUp = () => {
             <FcGoogle className="text-2xl mr-2" />
             Sign in with Google
           </button>
-
         </div>
       </div>
     </div>
