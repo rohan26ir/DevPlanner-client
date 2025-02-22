@@ -21,6 +21,10 @@ const Router = createBrowserRouter([
         element: <PrivateRoute><Home></Home></PrivateRoute>
       },
       {
+        path: '/addtask',
+        element: <PrivateRoute><PostTask></PostTask></PrivateRoute>
+      },
+      {
         path: "/signIn",
         element: <SignIn></SignIn>
       },
@@ -28,10 +32,6 @@ const Router = createBrowserRouter([
         path: "/signUp",
         element: <SignUp></SignUp>
       },
-      {
-        path: '/addtask',
-        element: <PostTask></PostTask>
-      }
     ]
   },
 ]);
