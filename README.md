@@ -67,6 +67,7 @@ DevPlanner-client/
 
 - Clone the repository:
     git clone https://github.com/rohan26ir/DevPlanner-client.git
+    <br>
     cd DevPlanner-client
 - Install dependencies:
     npm install
