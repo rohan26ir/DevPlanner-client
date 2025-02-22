@@ -135,7 +135,7 @@ const SignUp = () => {
           {/* Google Sign-in Button */}
           <button
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center bg-rose-900 text-white px-4 py-2 rounded w-full hover:bg-red-800 transition-all"
+            className="flex items-center justify-center border-2 border-gray-500 text-black hover:bg-gray-200 px-4 py-2 rounded w-full cursor-pointer transition-all mt-4"
           >
             <FcGoogle className="text-2xl mr-2" />
             Sign in with Google

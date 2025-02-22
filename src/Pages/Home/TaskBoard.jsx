@@ -95,7 +95,7 @@ const TaskCard = ({ task, deleteTask }) => {
     >
       <h4 className="font-medium">{task.title}</h4>
       <p className="text-sm text-gray-600">{task.description}</p>
-      <button onClick={() => deleteTask(task._id)} className="text-red-500 text-sm mt-2">Delete</button>
+      <button onClick={() => deleteTask(task._id)} className="text-red-500 text-sm mt-2 cursor-pointer">Delete</button>
     </div>
   );
 };

@@ -42,7 +42,9 @@ const SignIn = () => {
         </div>
 
         <div className="p-8 shadow-lg rounded-lg max-w-md w-full">
-          <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Welcome Back!</h2>
+          <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
+            Welcome Back!
+          </h2>
 
           {/* Sign-in Form */}
           <form onSubmit={handleEmailLogin} className="space-y-4 text-black">
@@ -64,11 +66,19 @@ const SignIn = () => {
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-all"
+              className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-all  cursor-pointer"
             >
               Sign In
             </button>
           </form>
+
+          {/* Redirect to Sign In */}
+          <div className="mt-4 text-center text-gray-600">
+            Create Account!{" "}
+            <Link to="/signup" className="text-blue-600">
+              Sign Up
+            </Link>
+          </div>
 
           {/* Divider */}
           <div className="flex items-center my-4">
@@ -77,16 +87,12 @@ const SignIn = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
 
-          <Link to={'/signup'}>
-          <div className="text-black bg-blue-500 flex justify-center items-center my-2 py-1 rounded-sm">
-            <p className="">Sign Up</p>
-          </div>
-          </Link>
+          
 
           {/* Google Sign-in Button */}
           <button
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center bg-rose-900 text-white px-4 py-2 rounded w-full hover:bg-red-800 transition-all mt-4"
+            className="flex items-center justify-center border-2 border-gray-500 text-black hover:bg-gray-200 px-4 py-2 rounded w-full cursor-pointer transition-all mt-4"
           >
             <FcGoogle className="text-2xl mr-2" />
             Sign in with Google

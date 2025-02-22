@@ -18,7 +18,10 @@ const Navbar = () => {
     <div className='w-11/12 mx-auto'>
       <div className="navbar">
         <div className="navbar-start">
-          <div className="dropdown">
+          
+          
+          
+          {/* <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +39,7 @@ const Navbar = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-              {/* <li><a>Item 1</a></li>
+              <li><a>Item 1</a></li>
               <li>
                 <a>Parent</a>
                 <ul className="p-2">
@@ -44,10 +47,13 @@ const Navbar = () => {
                   <li><a>Submenu 2</a></li>
                 </ul>
               </li>
-              <li><a>Item 3</a></li> */}
+              <li><a>Item 3</a></li>
             </ul>
-          </div>
-           <Link to={"/"}><h1 className="btn btn-ghost text-xl">DevPlanner</h1></Link>
+
+          </div> */}
+
+          
+           <Link to={"/"}><h1 className="font-bold text-xl">DevPlanner</h1></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
