@@ -1,104 +1,123 @@
-import React, { useState, useContext } from "react";
-import { updateProfile } from "firebase/auth";
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/Provider";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import signUpImage from "../../assets/signup.svg";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {
+  const { createNewUser, signInWithGoogle } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  const { createNewUser } = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState(null);
-
-  // Handle input change
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Handle form submit
-  const handleSubmit = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    setError(null);
-
-    const { name, email, password } = formData;
-
     try {
-      // Step 1: Create user in Firebase
       const userCredential = await createNewUser(email, password);
       const user = userCredential.user;
-
-      // Step 2: Update profile with name
-      await updateProfile(user, {
-        displayName: name,
-      });
-
-      // Step 3: Send user data to the database (only if it's their first login)
-      const userInfo = {
-        uid: user.uid,
+      await axiosPublic.post("/users", {
         name,
         email,
-      };
-
-      const response = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo),
+        photoUrl
       });
+      console.log("User signed up and data stored successfully!");
+      navigate("/"); // Redirect to home after successful sign-up
+    } catch (error) {
+      console.error("Sign Up Error:", error.message);
+    }
+  };
 
-      if (!response.ok) {
-        throw new Error("Failed to store user data on server");
-      }
-
-      alert("Sign-up successful!");
-    } catch (err) {
-      setError(err.message);
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      console.log("Google Sign-in successful!");
+      navigate("/"); // Redirect to home after Google login
+    } catch (error) {
+      console.error("Google Login Error:", error.message);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-4">Create Account</h2>
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="lg:py-20 lg:px-36">
+      <div className="bg-white/65 flex md:flex-row-reverse flex-col items-center justify-center">
+        {/* Sign Up Image */}
+        <div className="flex justify-center">
+          <img src={signUpImage} alt="Sign Up" className="h-40 md:h-96" />
+        </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
+        <div className="p-8 shadow-lg rounded-lg max-w-md w-full">
+          <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Create Your Account</h2>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
-        >
-          Create Account
-        </button>
-      </form>
+          {/* Sign-up Form */}
+          <form onSubmit={handleSignUp} className="space-y-4 text-black">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="border border-gray-300 p-3 w-full rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="border border-gray-300 p-3 w-full rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="border border-gray-300 p-3 w-full rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Photo URL"
+              className="border border-gray-300 p-3 w-full rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              value={photoUrl}
+              onChange={(e) => setPhotoUrl(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-all"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          {/* Redirect to Sign In */}
+          <div className="mt-4 text-center text-gray-600">
+            Already have an account? <Link to="/signIn" className="text-blue-600">Sign In</Link>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center my-4">
+            <hr className="flex-grow border-gray-300" />
+            <span className="px-2 text-gray-500">or</span>
+            <hr className="flex-grow border-gray-300" />
+          </div>
+
+          {/* Google Sign-in Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="flex items-center justify-center bg-rose-900 text-white px-4 py-2 rounded w-full hover:bg-red-800 transition-all"
+          >
+            <FcGoogle className="text-2xl mr-2" />
+            Sign in with Google
+          </button>
+
+        </div>
+      </div>
     </div>
   );
 };
