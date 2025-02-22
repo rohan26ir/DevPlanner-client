@@ -14,7 +14,7 @@ const Home = () => {
       </div>
 
 
-      <div className='bg-orange-400'>
+      <div className='bg-white'>
         <TaskBoard></TaskBoard>
       </div>
 
